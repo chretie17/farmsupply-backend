@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice <%= order.OrderId %></title>
+  <style>
+    :root {
+      --primary-color: #023F40;
+      --secondary-color: #035659;
+      --accent-color: #035659;
+      --text-color: #333;
+      --highlight-color: #04777c;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--accent-color);
+      color: var(--text-color);
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+    .header img {
+      max-width: 150px;
+    }
+    .header-text {
+      text-align: right;
+    }
+    .company-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+    .invoice-title {
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      background-color: var(--accent-color);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: rgb(0, 61, 17);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background-color: var(--secondary-color);
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .info-item {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .info-item p {
+      margin: 5px 0;
+    }
+    .info-item strong {
+      color: var(--secondary-color);
+    }
+    .details {
+      margin-bottom: 40px;
+    }
+    .details table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .details th, .details td {
+      padding: 15px;
+      text-align: left;
+    }
+    .details th {
+      background-color: var(--primary-color);
+      color: #035659;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .details tr:nth-child(even) {
+      background-color: #035659;
+    }
+    .details tr:hover {
+      background-color: #035659;
+    }
+    .total-section {
+      text-align: right;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      background-color: var(--highlight-color);
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--primary-color);
+      color: var(--secondary-color);
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="<%= logoBase64 %>" alt="Company Logo">
+      <div class="header-text">
+        <div class="company-name">Farm Supply Co.</div>
+        <div>123 Agriculture Lane, Rural City</div>
+        <div>Phone: (123) 456-7890</div>
+      </div>
+    </div>
+
+    <h1 class="invoice-title">Invoice</h1>
+
+    <h2 class="section-title">Order Information</h2>
+    <div class="info-grid">
+      <div class="info-item">
+        <p><strong>Order ID:</strong> <%= order.OrderId %></p>
+        <p><strong>Delivery Date:</strong> <%= order.deliveryDate %></p>
+      </div>
+      <div class="info-item">
+        <p><strong>Farmer:</strong> <%= order.FarmerName %></p>
+        <p><strong>Invoice Date:</strong> <%= new Date().toLocaleDateString() %></p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Order Details</h2>
+    <div class="details">
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity (kg)</th>
+            <th>Unit Price (RWF)</th>
+            <th>Total Price (RWF)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= order.ProductName %></td>
+            <td><%= order.Quantity %></td>
+            <td><%= order.UnitPriceRwf %></td>
+            <td><%= order.TotalPrice %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="total-section">
+      <p>Total Amount: RWF <%= order.TotalPrice %></p>
+    </div>
+
+    <div class="footer">
+      <p>Thank you for your business!</p>
+      <p>For any inquiries, please contact us at support@farmsupply.com</p>
+    </div>
+  </div>
+</body>
+</html>
